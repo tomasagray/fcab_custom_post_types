@@ -53,9 +53,14 @@ abstract class FCABDonorMetaBox
 
     public static function save(int $post_id): void
     {
-        $field_name = 'fcab_cpt_donor_total_donations';
-        if (array_key_exists($field_name, $_POST)) {
-            update_post_meta($post_id, '_fcab_cpt_donor_donations', $_POST[$field_name]);
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+        $fields = ['fcab_cpt_donor_total_donations'];
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $_POST)) {
+                update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+            }
         }
     }
 
@@ -67,9 +72,9 @@ abstract class FCABDonorMetaBox
         ?>
         <!-- FCAB Donor custom data fields -->
         <div>
-            <label for="fcab_cpt_total_donations">Total Donations</label>
+            <label for="fcab_cpt_donor_total_donations">Total Donations (US$)</label>
             <input type="number" min="1" step="1" name="fcab_cpt_donor_total_donations"
-                 id="fcab_cpt_total_donations"
+                 id="fcab_cpt_donor_total_donations"
                  value="<?php echo $total_donations ?>"/>
         </div>
         <?php
