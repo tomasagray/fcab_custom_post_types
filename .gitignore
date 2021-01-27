@@ -1,14 +1,14 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### WordPress template
 # ignore everything in the root except the "wp-content" directory.
-/*
+#/wordpress/
 !wp-content/
 
 # ignore everything in the "wp-content" directory, except:
 # "mu-plugins", "plugins", "themes" directory
 wp-content/*
 !wp-content/mu-plugins/
-!wp-content/plugins/
+!wp-content/plugins/fcab*
 !wp-content/themes/
 
 # ignore these plugins
@@ -26,3 +26,4 @@ node_modules/
 *.sqlite
 
 /.idea
+!fcab*
