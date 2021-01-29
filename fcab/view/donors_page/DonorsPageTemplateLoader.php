@@ -10,7 +10,7 @@ use fcab\view\TemplateLoader;
 class DonorsPageTemplateLoader implements TemplateLoader
 {
 
-    private $page;
+    private Page $page;
 
     /**
      * @inheritDoc

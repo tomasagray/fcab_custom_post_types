@@ -10,10 +10,10 @@ use WP_Post;
 class DonorsPage implements Page
 {
     private $url;
-    private $title;
-    private $content;
-    private $template;
-    private $wp_post;
+    private string $title;
+    private ?string $content = null;
+    private string $template;
+    private ?WP_Post $wp_post = null;
 
     public function __construct($url, $title = 'Untitled Donor Page', $template = 'page.php')
     {
