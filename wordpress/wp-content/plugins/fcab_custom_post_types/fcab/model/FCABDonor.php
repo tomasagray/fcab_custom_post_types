@@ -15,7 +15,7 @@ class FCABDonor
 
     public static function create_post_type(): void
     {
-        register_post_type('fcab_cpt_donor',
+        register_post_type(self::POST_TYPE,
             [
                 'labels' => [
                     'name' => __('Donors', DOMAIN),
@@ -67,7 +67,6 @@ class FCABDonor
         return $columns;
     }
 
-
     public static function create_post_column($column, $post_id): void
     {
         if ($column === DONATION_FIELD_NAME) {
@@ -82,4 +81,12 @@ add_action('init', [FCABDonor::class, 'create_post_type']);
 add_filter('manage_fcab_cpt_donor_posts_columns', [FCABDonor::class, 'create_post_columns']);
 add_filter('manage_edit-fcab_cpt_donor_sortable_columns', [FCABDonor::class, 'make_columns_sortable']);
 add_action('manage_fcab_cpt_donor_posts_custom_column', [FCABDonor::class, 'create_post_column'], 10, 2);
+// Disable 'block editor'
+add_filter('use_block_editor_for_post_type', function ($use_block_editor, $post_type) {
+    if (in_array($post_type, array('post', FCABDonor::POST_TYPE), true)) {
+        return false;
+    }
+    return $use_block_editor;
+}, 10, 2);
+
 

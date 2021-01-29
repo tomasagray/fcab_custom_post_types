@@ -1,0 +1,60 @@
+/* general styles */
+.donors-heading {
+    text-align: center;
+}
+
+div#donation-container > div {
+    padding: 2rem;
+}
+
+div#paypal-qr-code {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+div#paypal-button > * {
+    padding: 2rem;
+}
+
+div.donor-box {
+    margin: 0 auto;
+}
+
+div.donor-card {
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 3px 5px #666;
+    margin: 2.5rem auto;
+    width: 15rem;
+}
+
+div.donor-description {
+    padding: 1.3em;
+}
+
+/* override WP style */
+div.donor-image {
+    width: 15rem;
+    height: 15rem;
+    background-position: center;
+    background-size: cover;
+}
+
+div.donor-image img {
+    width: 100%;
+}
+
+/* desktop devices */
+@media only screen and (min-width: 600px) {
+    div#paypal-container {
+        display: flex;
+    }
+
+    div.donor-box {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    div.donor-card {
+        margin: 3rem 2rem;
+    }
+}
