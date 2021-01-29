@@ -6,7 +6,7 @@ namespace fcab;
 /**
  * Plugin Name: FCAB Post Types
  * Description: Custom post types for the FCAB WordPress website
- * Version: 0.2
+ * Version: 0.9a
  * Author: Tomás Gray
  **/
 

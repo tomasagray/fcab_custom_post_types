@@ -16,9 +16,9 @@ const FCAB_DONOR_PAGES = 'fcab_donor_pages';
 class DonorsPageController implements Controller
 {
 
-    private $pages;
-    private $loader;
-    private $matched;
+    private SplObjectStorage $pages;
+    private TemplateLoader $loader;
+    private Page $matched;
 
     public function __construct(TemplateLoader $loader)
     {
