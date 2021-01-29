@@ -10,7 +10,6 @@ use fcab\view\TemplateLoader;
 class DonorsPageTemplateLoader implements TemplateLoader
 {
 
-    private $templates;
     private $page;
 
     /**
@@ -18,7 +17,7 @@ class DonorsPageTemplateLoader implements TemplateLoader
      */
     public function init(Page $page): void
     {
-        $this->templates = wp_parse_args((array)$page->getTemplate(), ['page.php', 'index.php']);
+//        $templates = wp_parse_args((array)$page->getTemplate(), ['page.php', 'index.php']);
         $this->page = $page;
     }
 

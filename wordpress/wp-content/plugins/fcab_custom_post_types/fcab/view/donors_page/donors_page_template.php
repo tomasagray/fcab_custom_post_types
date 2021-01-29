@@ -31,7 +31,8 @@ get_header();
                 <?php require_once 'paypal_button.html'; ?>
             </div>
             <div id="paypal-qr-code">
-                <img src="<?php echo get_site_url(); ?>/wp-content/uploads/paypal_qr_code.png"
+                <?php $thumb_url = get_site_url().'/wp-content/uploads/paypal_qr_code.png'; ?>
+                <img src="<?php echo $thumb_url; ?>"
                      alt="Scan with your smartphone app to easily make a generous contribution" width="300"/>
             </div>
 
