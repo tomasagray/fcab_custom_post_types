@@ -2,7 +2,7 @@
 namespace fcab;
 
 
-use fcab\view\donors_page\DonorsPage;
+use fcab\view\donors\DonorsPage;
 use WP_Post;
 use WP_Query;
 
@@ -34,6 +34,6 @@ add_action('loop_end', function (WP_Query $query) {
 });
 
 // Hook sub-controllers
-require_once 'fcab/view/donors_page/init-donors-controller.php';
+require_once 'fcab/view/donors/init-donors-controller.php';
 
 

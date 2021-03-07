@@ -1,5 +1,5 @@
 <?php
-namespace fcab\view\donors_page;
+namespace fcab\view\donors;
 
 use fcab\view\Controller;
 

@@ -1,10 +1,10 @@
 /* general styles */
 .donors-heading {
-    text-align: center;
+    margin-left: 2rem;
 }
 
 div#donation-container > div {
-    padding: 2rem;
+    padding: 1.2rem;
 }
 
 div#paypal-qr-code {
@@ -23,7 +23,7 @@ div.donor-box {
 div.donor-card {
     border-radius: 0 0 5px 5px;
     box-shadow: 0 3px 5px #666;
-    margin: 2.5rem auto;
+    margin: 2rem auto;
     width: 15rem;
 }
 
@@ -45,6 +45,14 @@ div.donor-image img {
 
 /* desktop devices */
 @media only screen and (min-width: 600px) {
+    div#default-content {
+        float: left;
+        display: inline;
+        max-width: 65%;
+    }
+    div#qr-code {
+        float: right;
+    }
     div#paypal-container {
         display: flex;
     }
