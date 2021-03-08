@@ -5,32 +5,19 @@ namespace fcab;
 use fcab\model\FCABDonor;
 use WP_Query;
 
-/**
- * @param $donor1
- * @param $donor2
- * @return int
- */
-function sort_donors($donor1, $donor2): int
-{
-    $d1 = get_post_meta($donor1->ID, DONATION_FIELD_NAME, true);
-    $d2 = get_post_meta($donor2->ID, DONATION_FIELD_NAME, true);
-    if ($d1 === $d2) {
-        return 0;
-    }
-    return ($d1 < $d2) ? -1 : 1;
-}
 
-function partition_donors(array $donors): array
+function partition_donors(array $_donors): array
 {
-    $intervals = [500, 1000, 2000, 5000, 10000];
+    $donors = $_donors;
+    $intervals = [500, 1000, 2000, 5000, 10000, PHP_INT_MAX];
     $donor_table = [];
-    foreach ($donors as $donor) {
+
+    while (($donor = array_pop($donors)) !== null) {
         $donations = get_post_meta($donor->ID, DONATION_FIELD_NAME, true);
-        $i = 0;
-        foreach ($intervals as $inc) {
-            if ($donations <= $inc) {
-                $donor_table[$inc][$i] = $donor;
-                $i++;
+        foreach ($intervals as $interval) {
+            if ($donations <= $interval) {
+                $donor_table[$interval][] = $donor;
+                break;
             }
         }
     }
@@ -47,6 +34,14 @@ function print_donors(array $donors)
         ?>
         <a href="<?php echo get_post_permalink($donor->ID); ?>">
             <div class="donor-card">
+                <?php
+                $thumb_url = get_the_post_thumbnail_url($donor);
+                if ($thumb_url !== false):
+                    ?>
+                    <div class="donor-image" style="background-image: url('<?php echo $thumb_url; ?>');"></div>
+                <?php
+                endif;
+                ?>
                 <div class="donor-description">
                     <h4><?php echo $donor->post_title; ?></h4>
                     <p><?php echo $donor->post_content; ?></p>
@@ -74,26 +69,34 @@ $donations_page = get_post($page_id);
 echo $donations_page->post_content;
 ?>
     <div id="donors-container">
-            <?php
-            $donors = $loop->get_posts();
-            $donor_groups = partition_donors($donors);
-            $intervals = array_keys($donor_groups);
-            // Top-level donors
-            $top_interval = array_pop($intervals);
-            echo '<h3 class="donors-heading">$' . $top_interval . ' - above</h3>';
+        <?php
+        $donors = $loop->get_posts();
+        $donor_groups = partition_donors($donors);
+        ksort($donor_groups);
+        $intervals = array_keys($donor_groups);
+        // Top-level donors
+        $top_interval = array_pop($intervals);
+        $top_floor = $intervals[count($intervals) - 1];
+        if (count($donor_groups[$top_interval]) > 0) {
+            echo '<h3 class="donors-heading">$' . $top_floor . ' - above</h3>';
             print_donors($donor_groups[$top_interval]);
+        }
 
-            for ($i = count($intervals) - 1; $i > 0; $i--) {
-                $top = $intervals[$i];
-                $bottom = $intervals[$i - 1];
+        for ($i = count($intervals) - 1; $i > 0; $i--) {
+            $top = $intervals[$i];
+            $bottom = $intervals[$i - 1];
+            if (count($donor_groups[$top]) > 0) {
                 echo '<h3 class="donors-heading">$' . $bottom . ' - $' . $top . '</h3>';
                 print_donors($donor_groups[$top]);
             }
+        }
 
-            $bottom_group = $intervals[0];
-            echo '<h3 class="donors-heading">Up to ' . $bottom_group . '</h3>';
+        $bottom_group = $intervals[0];
+        if (count($donor_groups[$bottom_group]) > 0) {
+            echo '<h3 class="donors-heading">Up to $' . $bottom_group . '</h3>';
             print_donors($donor_groups[$bottom_group]);
-            ?>
+        }
+        ?>
     </div>
     <?php
 get_footer();
