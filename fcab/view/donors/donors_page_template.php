@@ -42,9 +42,9 @@ function print_donors(array $donors)
                 <?php
                 endif;
                 ?>
-                <div class="donor-description">
-                    <h4><?php echo $donor->post_title; ?></h4>
-                    <p><?php echo $donor->post_content; ?></p>
+                <div class="donor-summary">
+                    <p class="donor-title"><?php echo $donor->post_title; ?></p>
+                    <p class="donor-description"><?php echo $donor->post_content; ?></p>
                 </div>
             </div>
         </a>

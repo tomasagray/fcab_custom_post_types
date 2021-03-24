@@ -1,6 +1,7 @@
 /* general styles */
 .donors-heading {
-    margin-left: 2rem;
+    /*margin-left: 2rem;*/
+    font-size: 18pt;
 }
 
 div#donation-container > div {
@@ -21,14 +22,14 @@ div.donor-box {
 }
 
 div.donor-card {
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 3px 5px #666;
-    margin: 2rem auto;
+    /*border-radius: 0 0 5px 5px;*/
+    /*box-shadow: 0 3px 5px #666;*/
+    margin: 1.2rem;
     width: 15rem;
 }
 
-div.donor-description {
-    padding: 1.3em;
+div.donor-summary {
+    /*padding: 1.3em;*/
 }
 
 /* override WP style */
@@ -58,11 +59,11 @@ div.donor-image img {
     }
 
     div.donor-box {
-        display: flex;
-        flex-wrap: wrap;
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
     }
 
     div.donor-card {
-        margin: 3rem 2rem;
+        /*margin: 3rem 2rem;*/
     }
 }
