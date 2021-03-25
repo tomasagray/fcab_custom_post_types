@@ -44,7 +44,12 @@ function print_donors(array $donors)
                 ?>
                 <div class="donor-summary">
                     <p class="donor-title"><?php echo $donor->post_title; ?></p>
-                    <p class="donor-description"><?php echo $donor->post_content; ?></p>
+                    <?php
+                    $content = $donor->post_content;
+                    if ($content !== false && $content !== ''):
+                        ?>
+                        <p class="donor-description"><?php echo $content; ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
         </a>
