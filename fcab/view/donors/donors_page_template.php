@@ -13,7 +13,7 @@ function partition_donors(array $_donors): array
     $donor_table = [];
 
     while (($donor = array_pop($donors)) !== null) {
-        $donations = get_post_meta($donor->ID, DONATION_FIELD_NAME, true);
+        $donations = get_post_meta($donor->ID, FCABDonor::DONATION_FIELD_NAME, true);
         foreach ($intervals as $interval) {
             if ($donations <= $interval) {
                 $donor_table[$interval][] = $donor;

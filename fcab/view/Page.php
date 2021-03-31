@@ -6,11 +6,11 @@ use WP_Post;
 
 interface Page
 {
-    public function getUrl();
+    public function getUrl(): string;
 
-    public function getTemplate();
+    public function getTemplate(): string;
 
-    public function getTitle();
+    public function getTitle(): string;
 
     public function setTitle($title): Page;
 

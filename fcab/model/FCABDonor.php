@@ -3,7 +3,7 @@
 namespace fcab\model;
 
 use const fcab\DOMAIN;
-use const fcab\DONATION_FIELD_NAME;
+use const fcab\FCAB_CPT_DONATION_PAGE_ID;
 
 /**
  * Class FCABDonor
@@ -12,6 +12,7 @@ use const fcab\DONATION_FIELD_NAME;
 class FCABDonor
 {
     public const POST_TYPE = 'fcab_cpt_donor';
+    public const DONATION_FIELD_NAME = 'fcab_cpt_donor_total_donations';
 
     public static function create_post_type(): void
     {
@@ -23,12 +24,16 @@ class FCABDonor
                     'menu_name' => __('Donors', DOMAIN),
                     'add_new_item' => __('Add new Donor', DOMAIN),
                     'edit_item' => __('Edit Donor', DOMAIN),
+                    'new_item'  =>  __('New Donor', DOMAIN),
+                    'view_item' =>  __('View Donor', DOMAIN),
+                    'view_items' => __('View Donors', DOMAIN),
                     'featured_image' => __('Donor Image', DOMAIN),
                     'set_featured_image' => __('Set donor image', DOMAIN),
                     'remove_featured_image' => __('Remove donor image', DOMAIN),
                 ],
                 'public' => true,
                 'has_archive' => true,
+                'rewrite'   => ['slug' => 'donor'],
                 'show_ui' => true,
                 'show_in_nav_menus' => true,
                 'show_in_menu' => true,
@@ -54,7 +59,7 @@ class FCABDonor
     public static function create_post_columns($columns): array
     {
         $columns['title'] = __('Name', DOMAIN);
-        $new_columns = array_merge($columns, [DONATION_FIELD_NAME => __('Total Donations', DOMAIN)]);
+        $new_columns = array_merge($columns, [self::DONATION_FIELD_NAME => __('Total Donations', DOMAIN)]);
         $end_col = $new_columns['date'];
         unset($new_columns['date']);
         $new_columns['date'] = $end_col;
@@ -63,19 +68,59 @@ class FCABDonor
 
     public static function make_columns_sortable($columns): array
     {
-        $columns[DONATION_FIELD_NAME] = DONATION_FIELD_NAME;
+        $columns[self::DONATION_FIELD_NAME] = self::DONATION_FIELD_NAME;
         return $columns;
     }
 
     public static function create_post_column($column, $post_id): void
     {
-        if ($column === DONATION_FIELD_NAME) {
-            $donations = get_post_meta($post_id, DONATION_FIELD_NAME, true);
+        if ($column === self::DONATION_FIELD_NAME) {
+            $donations = get_post_meta($post_id, self::DONATION_FIELD_NAME, true);
             echo '<span>'.$donations.'</span>';
         }
     }
+
+    /**
+     * Add plugin style sheets
+     */
+    public static function add_donor_stylesheet(): void
+    {
+        wp_enqueue_style('donor_stylesheet', plugins_url('fcab/view/donors/donor_page.css', __FILE__));
+    }
 }
 
+
+/**
+ * Create Donations page
+ */
+function create_donations_page()
+{
+
+    // Read default content
+    $content = file_get_contents("fcab/view/donors/default_content.php", 'rb')
+    or die("Could not load default FCAB content!");
+    $qr_img = plugin_dir_url(__FILE__) . "/fcab/view/donors/paypal_qr_code.png";
+    $img_content = str_replace("%QR_CODE%", $qr_img, $content);
+
+    // Check if page already exists
+    $page = get_page_by_title('Donations');
+    if ($page !== null) {
+        return;
+    }
+
+    $donations_page = [
+        'post_title' => wp_strip_all_tags('Donations'),
+        'post_content' => $img_content,
+        'post_status' => 'publish',
+        'post_author' => 1,
+        'post_type' => 'page',
+    ];
+    $page_id = wp_insert_post($donations_page);
+    update_option(FCAB_CPT_DONATION_PAGE_ID, $page_id);
+}
+register_activation_hook(__FILE__, 'fcab\create_donations_page');
+
+add_action('wp_enqueue_scripts', [FCABDonor::class, 'add_donor_stylesheet']);
 // Hooks
 add_action('init', [FCABDonor::class, 'create_post_type']);
 add_filter('manage_fcab_cpt_donor_posts_columns', [FCABDonor::class, 'create_post_columns']);

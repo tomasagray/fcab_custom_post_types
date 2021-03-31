@@ -1,23 +1,21 @@
 <?php
 
 
-namespace fcab\view\donors;
+namespace fcab\view;
 
 
-use fcab\view\Page;
-use fcab\view\TemplateLoader;
-
-class DonorsPageTemplateLoader implements TemplateLoader
+class PageTemplateLoader implements TemplateLoader
 {
 
     private Page $page;
+    private array $templates;
 
     /**
      * @inheritDoc
      */
     public function init(Page $page): void
     {
-//        $templates = wp_parse_args((array)$page->getTemplate(), ['page.php', 'index.php']);
+        $this->templates = wp_parse_args((array)$page->getTemplate(), ['page.php', 'index.php']);
         $this->page = $page;
     }
 
@@ -26,12 +24,13 @@ class DonorsPageTemplateLoader implements TemplateLoader
      */
     public function load(): void
     {
+        // todo - re-enable this
+//        var_dump($this->templates);
+//        $template = locate_template(array_filter($this->templates));
+//        var_dump($template);
         do_action('template_redirect');
         $template = $this->page->getTemplate();
         require_once $template;
-        // todo - re-enable this
-//        $template = locate_template(array_filter($this->templates));
-//        var_dump($template);
 //        $filtered = apply_filters('template_include', $template);
 //        var_dump($filtered);
 //        if (empty($filtered) || file_exists($filtered)) {
