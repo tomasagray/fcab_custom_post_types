@@ -5,8 +5,7 @@ namespace fcab\view\donors;
 
 
 use fcab\view\CustomPage;
-use fcab\view\Page;
-use WP_Post;
+
 
 class DonorsPage extends CustomPage
 {

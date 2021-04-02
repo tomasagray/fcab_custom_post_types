@@ -69,7 +69,7 @@ $loop = new WP_Query($q_args);
 get_header();
 
 // Print donor page
-$page_id = get_option('fcab_cpt_donation_page_id');
+$page_id = get_option(FCAB_CPT_DONATION_PAGE_ID);
 $donations_page = get_post($page_id);
 echo $donations_page->post_content;
 ?>
