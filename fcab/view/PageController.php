@@ -55,7 +55,9 @@ abstract class PageController implements Controller
         $this->pages->rewind();
         $path = trim($this->getPathInfo(), '/');
         while ($this->pages->valid()) {
-            if (trim($this->pages->current()->getUrl(), '/') === $path) {
+            $url_pattern = trim($this->pages->current()->getUrl(), '/');
+            $url_pattern = "/{$url_pattern}/i"; // format as regex
+            if (preg_match($url_pattern, $path) === 1) {
                 $this->matched = $this->pages->current();
                 return true;
             }

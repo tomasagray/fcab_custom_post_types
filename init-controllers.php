@@ -35,5 +35,4 @@ add_action('loop_end', function (WP_Query $query) {
 
 // Hook sub-controllers
 require_once 'fcab/view/donors/init-donors-controller.php';
-
-
+require_once 'fcab/view/projects/init-projects-controller.php';
