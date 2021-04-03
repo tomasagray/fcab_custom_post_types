@@ -79,14 +79,6 @@ class FCABDonor
             echo '<span>'.$donations.'</span>';
         }
     }
-
-    /**
-     * Add plugin style sheets
-     */
-    public static function add_donor_stylesheet(): void
-    {
-        wp_enqueue_style('donor_stylesheet', plugins_url('fcab/view/donors/donor_page.css', __FILE__));
-    }
 }
 
 
@@ -120,7 +112,6 @@ function create_donations_page()
 }
 register_activation_hook(__FILE__, 'fcab\create_donations_page');
 
-add_action('wp_enqueue_scripts', [FCABDonor::class, 'add_donor_stylesheet']);
 // Hooks
 add_action('init', [FCABDonor::class, 'create_post_type']);
 add_filter('manage_fcab_cpt_donor_posts_columns', [FCABDonor::class, 'create_post_columns']);

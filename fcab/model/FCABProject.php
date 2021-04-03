@@ -9,6 +9,7 @@ use const fcab\DOMAIN;
 class FCABProject
 {
     public const POST_TYPE = 'fcab_cpt_project';
+    public const TAGS = 'fcab_project_tag';
 
 
     public static function create_post_type(): void
@@ -30,7 +31,7 @@ class FCABProject
                 ],
                 'public' => true,
                 'has_archive' => true,
-                'rewrite'   =>  ['slug' => 'project'],
+                'rewrite'   =>  ['slug' => 'projects'],
                 'show_ui' => true,
                 'show_in_nav_menus' => true,
                 'show_in_menu' => true,
@@ -64,17 +65,19 @@ class FCABProject
             'menu_name' => __('Tags'),
         );
 
-        register_taxonomy('tag', self::POST_TYPE, array(
+        register_taxonomy(self::TAGS, self::POST_TYPE, array(
             'hierarchical' => false,
             'labels' => $labels,
             'show_ui' => true,
             'update_count_callback' => '_update_post_term_count',
             'query_var' => true,
-            'rewrite' => array('slug' => 'tag'),
+            'rewrite' => array('slug' => self::TAGS),
             'show_admin_column' => true,
             'sort'  => true,
         ));
     }
+
+
 }
 
 // Hooks
