@@ -6,8 +6,13 @@ get_header();
 
 $post_id = url_to_postid($_SERVER['REQUEST_URI']);
 $post = get_post($post_id);
+if ($post === null || $post->post_status !== 'publish') {
+    echo '<p>This project does not exist.</p>';
+    exit(0);
+}
 $tags = wp_get_post_terms($post_id, FCABProject::TAGS);
 ?>
+    <title><?php echo $post->post_title; ?></title>
     <div class="project-container">
         <div class="project-heading">
             <h1><?php echo $post->post_title; ?></h1>
