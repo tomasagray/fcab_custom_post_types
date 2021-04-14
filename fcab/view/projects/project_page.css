@@ -1,3 +1,19 @@
+.project-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-sort-tag {
+    text-transform: uppercase;
+    border: 1px solid #da007c;
+    border-radius: 5rem;
+    color: #da007c;
+    font-weight: bold;
+    padding: 0.4rem 0.8rem;
+    margin: 0.5rem;
+
+}
+
 .project-card-container {
     display: flex;
     flex-wrap: wrap;

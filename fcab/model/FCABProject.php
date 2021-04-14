@@ -76,8 +76,6 @@ class FCABProject
             'sort'  => true,
         ));
     }
-
-
 }
 
 // Hooks
