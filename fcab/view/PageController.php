@@ -4,9 +4,9 @@
 namespace fcab\view;
 
 
-use \SplObjectStorage;
-use \WP;
-use \WP_Post;
+use SplObjectStorage;
+use WP;
+use WP_Post;
 
 abstract class PageController implements Controller
 {
@@ -56,7 +56,7 @@ abstract class PageController implements Controller
         $path = trim($this->getPathInfo(), '/');
         while ($this->pages->valid()) {
             $url_pattern = trim($this->pages->current()->getUrl(), '/');
-            $url_pattern = "/{$url_pattern}/i"; // format as regex
+            $url_pattern = "/$url_pattern/i"; // format as regex
             if (preg_match($url_pattern, $path) === 1) {
                 $this->matched = $this->pages->current();
                 return true;
@@ -69,7 +69,7 @@ abstract class PageController implements Controller
     protected function getPathInfo()
     {
         $home_path = parse_url(home_url(), PHP_URL_PATH);
-        return preg_replace("#^/?{$home_path}/#", '/', esc_url(add_query_arg(array())));
+        return preg_replace("#^/?$home_path/#", '/', esc_url(add_query_arg(array())));
     }
 
     protected function setupQuery(): void

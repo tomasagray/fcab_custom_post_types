@@ -25,7 +25,7 @@ function partition_donors(array $_donors): array
 }
 
 /**
- * @param $donors
+ * @param array $donors
  */
 function print_donors(array $donors)
 {

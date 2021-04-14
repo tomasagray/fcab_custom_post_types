@@ -26,7 +26,7 @@ function get_tag_arg($current_tag, array &$q_args): void
 {
     $q_args['tax_query'] = array([
         'taxonomy' => FCABProject::TAGS,
-        'terms' => array($current_tag),
+        'terms' => $current_tag,
         'field' => 'name'
     ]);
 }
