@@ -64,8 +64,17 @@ get_header();
 echo '<div class="project-tags-container">';
 foreach ($terms as $term) {
     $filter_url = get_query_url(['tag' => $term->name]);
-    echo '<a class="project-sort-tag" href="' . $filter_url . '">' . $term->name . '</a>';
+    $parent_list = get_term_parents_list(
+        $term->term_id,
+        FCABProject::TAGS,
+        ['separator' => '--', 'link' => false]
+    );
+    $term_parents = explode('--', $parent_list);
+    if (!(in_array('Other', $term_parents, true))) {
+        echo '<a class="project-sort-tag" href="' . $filter_url . '">' . $term->name . '</a>';
+    }
 }
+echo '<a class="project-sort-tag" href="' . get_query_url(['tag' => 'Other']) . '">Other</a>';
 echo '</div>';
 
 if ($current_tag !== null) {

@@ -13,6 +13,7 @@ class FCABDonor
 {
     public const POST_TYPE = 'fcab_cpt_donor';
     public const DONATION_FIELD_NAME = 'fcab_cpt_donor_total_donations';
+    public const FCAB_DONATION_AMOUNT = 'fcab_cpt_donation_amount';
 
     public static function create_post_type(): void
     {
@@ -48,12 +49,13 @@ class FCABDonor
 
     public static function create_taxonomies(): void
     {
-        register_taxonomy('fcab_cpt_donation_amount', self::POST_TYPE, [
+        register_taxonomy(self::FCAB_DONATION_AMOUNT, self::POST_TYPE, [
             'label' => __('Total Donations', DOMAIN),
             'rewrite' => false, // ['slug', 'donations'],
             'hierarchical' => false,
             'public'    =>  true,
         ]);
+        register_taxonomy_for_object_type(self::FCAB_DONATION_AMOUNT, self::POST_TYPE);
     }
 
     public static function create_post_columns($columns): array
@@ -110,7 +112,7 @@ function create_donations_page()
     $page_id = wp_insert_post($donations_page);
     update_option(FCAB_CPT_DONATION_PAGE_ID, $page_id);
 }
-register_activation_hook(__FILE__, 'fcab\create_donations_page');
+register_activation_hook(__FILE__, 'fcab\model\create_donations_page');
 
 // Hooks
 add_action('init', [FCABDonor::class, 'create_post_type']);

@@ -10,7 +10,7 @@ class FCABProject
 {
     public const POST_TYPE = 'fcab_cpt_project';
     public const TAGS = 'fcab_project_tag';
-
+    public const OTHER_TAG = 'Other';
 
     public static function create_post_type(): void
     {
@@ -31,7 +31,7 @@ class FCABProject
                 ],
                 'public' => true,
                 'has_archive' => true,
-                'rewrite'   =>  ['slug' => 'projects'],
+                'rewrite' => ['slug' => 'projects'],
                 'show_ui' => true,
                 'show_in_nav_menus' => true,
                 'show_in_menu' => true,
@@ -66,15 +66,19 @@ class FCABProject
         );
 
         register_taxonomy(self::TAGS, self::POST_TYPE, array(
-            'hierarchical' => false,
+            'hierarchical' => true,
             'labels' => $labels,
             'show_ui' => true,
             'update_count_callback' => '_update_post_term_count',
             'query_var' => true,
             'rewrite' => array('slug' => self::TAGS),
             'show_admin_column' => true,
-            'sort'  => true,
+            'sort' => true,
         ));
+        register_taxonomy_for_object_type(self::TAGS, self::POST_TYPE);
+        // Add 'other' category
+        wp_insert_term(self::OTHER_TAG, self::TAGS,
+            array('description' => 'Projects which do not fit into other categories.'));
     }
 }
 
