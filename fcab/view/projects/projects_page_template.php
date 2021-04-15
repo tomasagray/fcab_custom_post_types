@@ -7,13 +7,13 @@ function get_query_url(array $param): string
     $url = $_SERVER['REQUEST_URI'];
     if (strpos($url, '?')) {
         if (strpos($url, 'tag=')) {
-            $new_param = 'tag=' . $param['tag'];
-            $url = preg_replace('/tag=[\w]+/', $new_param, $url);
+            $new_param = 'project-tag=' . $param['tag'];
+            $url = preg_replace('/project-tag=[\w]+/', $new_param, $url);
         } else {
-            $url .= '&tag=' . $param['tag'];
+            $url .= '&project-tag=' . $param['tag'];
         }
     } else {
-        $url .= '?tag=' . $param['tag'];
+        $url .= '?project-tag=' . $param['tag'];
     }
     return $url;
 }
@@ -40,8 +40,8 @@ $q_args = [
     'post_status' => 'publish',
     'posts_per_page' => -1,
 ];
-if (isset($_GET['tag'])) {
-    $tag_param = $_GET['tag'];
+if (isset($_GET['project-tag'])) {
+    $tag_param = $_GET['project-tag'];
     foreach ($terms as $term) {
         if ($term->name === $tag_param) {
             $current_tag = $term;
