@@ -19,49 +19,59 @@ function get_query_url(array $param): string
 }
 
 /**
- * @param $current_tag
- * @param array $q_args
+ * @param array $terms
+ * @return array
  */
-function get_tag_arg($current_tag, array &$q_args): void
+function get_query_args(array $terms): array
 {
-    $q_args['tax_query'] = array([
-        'taxonomy' => FCABProject::TAGS,
-        'terms' => $current_tag,
-        'field' => 'name'
-    ]);
+    global $current_tag;
+    $q_args = [
+        'post_type' => FCABProject::POST_TYPE,
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+    ];
+    if (isset($_POST['project-tag'])) {
+        $tag_param = $_POST['project-tag'];
+        foreach ($terms as $term) {
+            if ($term->name === $tag_param) {
+                $current_tag = $term;
+            }
+        }
+    }
+    if ($current_tag !== null) {
+        $q_args['tax_query'] = array([
+            'taxonomy' => FCABProject::TAGS,
+            'terms' => $current_tag,
+            'field' => 'name'
+        ]);
+    }
+    return $q_args;
 }
 
 
 $current_tag = null;
 $terms = get_terms(['taxonomy' => FCABProject::TAGS]);
-
-$q_args = [
-    'post_type' => FCABProject::POST_TYPE,
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-];
-if (isset($_GET['project-tag'])) {
-    $tag_param = $_GET['project-tag'];
-    foreach ($terms as $term) {
-        if ($term->name === $tag_param) {
-            $current_tag = $term;
-        }
-    }
-}
-if ($current_tag !== null) {
-    get_tag_arg($current_tag->name, $q_args);
-}
-
+$q_args = get_query_args($terms);
 // Get donors
 $loop = new WP_Query($q_args);
 
-get_header();
 
+get_header();
 ?>
     <h1 class="project-heading">Our Projects</h1>
+    <script type="text/javascript">
+        function submitTagFilter($tagName) {
+            // Set hidden input
+            $('#project-tag').val($tagName);
+            // Submit form
+            $('#filter-tags').submit();
+        }
+    </script>
 
 <?php
 echo '<div class="project-tags-container">';
+echo '<form name="filter-tags" id="filter-tags" method="POST" action="' . $_SERVER['REQUEST_URI'] . '">';
+echo '<input type="hidden" name="project-tag" id="project-tag" />';
 foreach ($terms as $term) {
     $filter_url = get_query_url(['tag' => $term->name]);
     $parent_list = get_term_parents_list(
@@ -71,10 +81,11 @@ foreach ($terms as $term) {
     );
     $term_parents = explode('--', $parent_list);
     if (!(in_array('Other', $term_parents, true))) {
-        echo '<a class="project-sort-tag" href="' . $filter_url . '">' . $term->name . '</a>';
+        echo '<a class="project-sort-tag" href="Javascript:submitTagFilter(\'' . $term->name . '\');">' . $term->name . '</a>';
     }
 }
-echo '<a class="project-sort-tag" href="' . get_query_url(['tag' => 'Other']) . '">Other</a>';
+echo '<a class="project-sort-tag" href="Javascript:submitTagFilter(\'Other\');">Other</a>';
+echo '</form>';
 echo '</div>';
 
 if ($current_tag !== null) {
