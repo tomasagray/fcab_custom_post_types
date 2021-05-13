@@ -4,6 +4,7 @@ namespace fcab;
 
 use fcab\model\FCABDonor;
 use WP_Query;
+use const fcab\model\DONATIONS_PAGE_TITLE;
 
 
 function partition_donors(array $_donors): array
@@ -69,8 +70,8 @@ $loop = new WP_Query($q_args);
 get_header();
 
 // Print donor page
-$page_id = get_option(FCAB_CPT_DONATION_PAGE_ID);
-$donations_page = get_post($page_id);
+$donations_page = get_page_by_title(DONATIONS_PAGE_TITLE);
+
 echo $donations_page->post_content;
 ?>
     <div id="donors-container">

@@ -5,6 +5,8 @@ namespace fcab\model;
 use const fcab\DOMAIN;
 use const fcab\FCAB_CPT_DONATION_PAGE_ID;
 
+const DONATIONS_PAGE_TITLE = 'Donations';
+
 /**
  * Class FCABDonor
  * Represents a financial contributor to FCAB
@@ -97,13 +99,13 @@ function create_donations_page()
     $img_content = str_replace("%QR_CODE%", $qr_img, $content);
 
     // Check if page already exists
-    $page = get_page_by_title('Donations');
+    $page = get_page_by_title(DONATIONS_PAGE_TITLE);
     if ($page !== null) {
         return;
     }
 
     $donations_page = [
-        'post_title' => wp_strip_all_tags('Donations'),
+        'post_title' => wp_strip_all_tags(DONATIONS_PAGE_TITLE),
         'post_content' => $img_content,
         'post_status' => 'publish',
         'post_author' => 1,
