@@ -71,38 +71,39 @@ get_header();
 
 // Print donor page
 $donations_page = get_page_by_title(DONATIONS_PAGE_TITLE);
-
-echo $donations_page->post_content;
 ?>
-    <div id="donors-container">
-        <?php
-        $donors = $loop->get_posts();
-        $donor_groups = partition_donors($donors);
-        ksort($donor_groups);
-        $intervals = array_keys($donor_groups);
-        // Top-level donors
-        $top_interval = array_pop($intervals);
-        $top_floor = $intervals[count($intervals) - 1];
-        if (count($donor_groups[$top_interval]) > 0) {
-            echo '<h3 class="donors-heading">$' . $top_floor . ' - above</h3>';
-            print_donors($donor_groups[$top_interval]);
-        }
-
-        for ($i = count($intervals) - 1; $i > 0; $i--) {
-            $top = $intervals[$i];
-            $bottom = $intervals[$i - 1];
-            if (count($donor_groups[$top]) > 0) {
-                echo '<h3 class="donors-heading">$' . $bottom . ' - $' . $top . '</h3>';
-                print_donors($donor_groups[$top]);
+    <div class="content-box">
+        <?php echo $donations_page->post_content; ?>
+        <div id="donors-container">
+            <?php
+            $donors = $loop->get_posts();
+            $donor_groups = partition_donors($donors);
+            ksort($donor_groups);
+            $intervals = array_keys($donor_groups);
+            // Top-level donors
+            $top_interval = array_pop($intervals);
+            $top_floor = $intervals[count($intervals) - 1];
+            if (count($donor_groups[$top_interval]) > 0) {
+                echo '<h3 class="donors-heading">$' . $top_floor . ' - above</h3>';
+                print_donors($donor_groups[$top_interval]);
             }
-        }
 
-        $bottom_group = $intervals[0];
-        if (count($donor_groups[$bottom_group]) > 0) {
-            echo '<h3 class="donors-heading">Up to $' . $bottom_group . '</h3>';
-            print_donors($donor_groups[$bottom_group]);
-        }
-        ?>
+            for ($i = count($intervals) - 1; $i > 0; $i--) {
+                $top = $intervals[$i];
+                $bottom = $intervals[$i - 1];
+                if (count($donor_groups[$top]) > 0) {
+                    echo '<h3 class="donors-heading">$' . $bottom . ' - $' . $top . '</h3>';
+                    print_donors($donor_groups[$top]);
+                }
+            }
+
+            $bottom_group = $intervals[0];
+            if (count($donor_groups[$bottom_group]) > 0) {
+                echo '<h3 class="donors-heading">Up to $' . $bottom_group . '</h3>';
+                print_donors($donor_groups[$bottom_group]);
+            }
+            ?>
+        </div>
     </div>
     <?php
 get_footer();

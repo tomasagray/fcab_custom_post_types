@@ -25,9 +25,7 @@ class PageTemplateLoader implements TemplateLoader
     public function load(): void
     {
         // todo - re-enable this
-//        var_dump($this->templates);
-//        $template = locate_template(array_filter($this->templates));
-//        var_dump($template);
+//        $t_template = locate_template(array_filter($this->templates));
         do_action('template_redirect');
         $template = $this->page->getTemplate();
         require_once $template;

@@ -20,7 +20,8 @@ abstract class PageController implements Controller
      */
     public function dispatch(bool $bool, WP $wp): bool
     {
-        $requestMatched = $this->checkRequest();
+        // todo - fix this
+        $requestMatched = $this->checkRequest(); // warning!!! - modifies $this->matched
         $isPageType = $this->isPageType();
         if ($requestMatched && $isPageType) {
             $this->loader->init($this->matched);
@@ -53,11 +54,12 @@ abstract class PageController implements Controller
     protected function checkRequest(): bool
     {
         $this->pages->rewind();
-        $path = trim($this->getPathInfo(), '/');
+        $path =  add_query_arg(NULL, NULL);
         while ($this->pages->valid()) {
             $url_pattern = trim($this->pages->current()->getUrl(), '/');
             $url_pattern = "/$url_pattern/i"; // format as regex
-            if (preg_match($url_pattern, $path) === 1) {
+            $url_matches = preg_match($url_pattern, $path);
+            if ($url_matches === 1) {
                 $this->matched = $this->pages->current();
                 return true;
             }

@@ -18,7 +18,7 @@ add_action('wp_enqueue_scripts', 'fcab\view\projects\add_project_stylesheet');
 add_filter('do_parse_request', [$controller, 'dispatch'], PHP_INT_MAX, 2);
 add_action(FCAB_PROJECT_PAGES, function (Controller $controller) {
     // Projects Overview
-    $controller->addPage(new ProjectsPage('(\/projects[-\w?&=%]*)$'))
+    $controller->addPage(new ProjectsPage('(\/projects[\/]?[?=&%\w\d]*)$'))
         ->setTitle('Projects')
         ->setTemplate('projects/projects_page_template.php');
     // Project Detail page
