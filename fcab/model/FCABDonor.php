@@ -5,7 +5,7 @@ namespace fcab\model;
 use const fcab\DOMAIN;
 use const fcab\FCAB_CPT_DONATION_PAGE_ID;
 
-const DONATIONS_PAGE_TITLE = 'Donations';
+const DONATIONS_PAGE_TITLE = 'Donate';
 
 /**
  * Class FCABDonor
@@ -83,38 +83,37 @@ class FCABDonor
             echo '<span>'.$donations.'</span>';
         }
     }
-}
 
+    /**
+     * Create Donations page
+     */
+    public static function create_donations_page(): void
+    {
+        // Read default content
+        $plugin_path = dirname(__DIR__) . '/view/donors';
+        $content_path = $plugin_path . '/default_content.php';
+        $content = file_get_contents($content_path)
+            or die("Could not load default FCAB content!");
+        $qr_img = plugin_dir_url(__DIR__) . "view/donors/paypal_qr_code.png";
+        $img_content = str_replace("%QR_CODE%", $qr_img, $content);
 
-/**
- * Create Donations page
- */
-function create_donations_page()
-{
+        // Check if page already exists
+        $page = get_page_by_title(DONATIONS_PAGE_TITLE);
+        if ($page !== null) {
+            return;
+        }
 
-    // Read default content
-    $content = file_get_contents("fcab/view/donors/default_content.php", 'rb')
-    or die("Could not load default FCAB content!");
-    $qr_img = plugin_dir_url(__FILE__) . "/fcab/view/donors/paypal_qr_code.png";
-    $img_content = str_replace("%QR_CODE%", $qr_img, $content);
-
-    // Check if page already exists
-    $page = get_page_by_title(DONATIONS_PAGE_TITLE);
-    if ($page !== null) {
-        return;
+        $donations_page = [
+            'post_title' => wp_strip_all_tags(DONATIONS_PAGE_TITLE),
+            'post_content' => $img_content,
+            'post_status' => 'publish',
+            'post_author' => 1,
+            'post_type' => 'page',
+        ];
+        $page_id = wp_insert_post($donations_page);
+        update_option(FCAB_CPT_DONATION_PAGE_ID, $page_id);
     }
-
-    $donations_page = [
-        'post_title' => wp_strip_all_tags(DONATIONS_PAGE_TITLE),
-        'post_content' => $img_content,
-        'post_status' => 'publish',
-        'post_author' => 1,
-        'post_type' => 'page',
-    ];
-    $page_id = wp_insert_post($donations_page);
-    update_option(FCAB_CPT_DONATION_PAGE_ID, $page_id);
 }
-register_activation_hook(__FILE__, 'fcab\model\create_donations_page');
 
 // Hooks
 add_action('init', [FCABDonor::class, 'create_post_type']);

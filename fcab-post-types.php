@@ -3,6 +3,8 @@
 namespace fcab;
 
 
+use fcab\model\FCABDonor;
+
 /**
  * Plugin Name: FCAB Post Types
  * Description: Custom post types for the FCAB WordPress website
@@ -44,3 +46,5 @@ function create_settings()
     register_setting(FCAB_CPT_OPTIONS, FCAB_CPT_DONATION_PAGE_ID);
 }
 add_action('admin_init', 'fcab\create_settings');
+
+register_activation_hook(__FILE__, [FCABDonor::class, 'create_donations_page']);

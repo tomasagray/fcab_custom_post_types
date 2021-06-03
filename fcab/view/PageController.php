@@ -60,18 +60,13 @@ abstract class PageController implements Controller
             $url_pattern = "/$url_pattern/i"; // format as regex
             $url_matches = preg_match($url_pattern, $path);
             if ($url_matches === 1) {
+                // todo - fix this; don't modify vars
                 $this->matched = $this->pages->current();
                 return true;
             }
             $this->pages->next();
         }
         return false;
-    }
-
-    protected function getPathInfo()
-    {
-        $home_path = parse_url(home_url(), PHP_URL_PATH);
-        return preg_replace("#^/?$home_path/#", '/', esc_url(add_query_arg(array())));
     }
 
     protected function setupQuery(): void
