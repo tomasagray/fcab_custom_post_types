@@ -27,8 +27,8 @@ class FCABDonor
                     'menu_name' => __('Donors', DOMAIN),
                     'add_new_item' => __('Add new Donor', DOMAIN),
                     'edit_item' => __('Edit Donor', DOMAIN),
-                    'new_item'  =>  __('New Donor', DOMAIN),
-                    'view_item' =>  __('View Donor', DOMAIN),
+                    'new_item' => __('New Donor', DOMAIN),
+                    'view_item' => __('View Donor', DOMAIN),
                     'view_items' => __('View Donors', DOMAIN),
                     'featured_image' => __('Donor Image', DOMAIN),
                     'set_featured_image' => __('Set donor image', DOMAIN),
@@ -36,12 +36,12 @@ class FCABDonor
                 ],
                 'public' => true,
                 'has_archive' => true,
-                'rewrite'   => ['slug' => 'donor'],
+                'rewrite' => ['slug' => 'donor'],
                 'show_ui' => true,
                 'show_in_nav_menus' => true,
                 'show_in_menu' => true,
                 'show_in_admin_bar' => true,
-                'show_in_rest'  => true,
+                'show_in_rest' => true,
                 'menu_icon' => plugin_dir_url(__FILE__) . '../../img/donors_admin_icon.png',
                 'can_export' => true,
                 'supports' => ['title', 'thumbnail', 'editor'],
@@ -55,7 +55,7 @@ class FCABDonor
             'label' => __('Total Donations', DOMAIN),
             'rewrite' => false, // ['slug', 'donations'],
             'hierarchical' => false,
-            'public'    =>  true,
+            'public' => true,
         ]);
         register_taxonomy_for_object_type(self::FCAB_DONATION_AMOUNT, self::POST_TYPE);
     }
@@ -80,7 +80,7 @@ class FCABDonor
     {
         if ($column === self::DONATION_FIELD_NAME) {
             $donations = get_post_meta($post_id, self::DONATION_FIELD_NAME, true);
-            echo '<span>'.$donations.'</span>';
+            echo '<span>' . $donations . '</span>';
         }
     }
 
@@ -89,19 +89,19 @@ class FCABDonor
      */
     public static function create_donations_page(): void
     {
-        // Read default content
-        $plugin_path = dirname(__DIR__) . '/view/donors';
-        $content_path = $plugin_path . '/default_content.php';
-        $content = file_get_contents($content_path)
-            or die("Could not load default FCAB content!");
-        $qr_img = plugin_dir_url(__DIR__) . "view/donors/paypal_qr_code.png";
-        $img_content = str_replace("%QR_CODE%", $qr_img, $content);
-
         // Check if page already exists
         $page = get_page_by_title(DONATIONS_PAGE_TITLE);
         if ($page !== null) {
             return;
         }
+
+        // Read default content
+        $plugin_path = dirname(__DIR__) . '/view/donors';
+        $content_path = $plugin_path . '/default_content.php';
+        $content = file_get_contents($content_path) or die("Could not load default FCAB content!");
+        // Replace QR code refs
+        $qr_img_url = plugin_dir_url(__DIR__) . "view/donors/paypal_qr_code.png";
+        $img_content = str_replace("%QR_CODE%", $qr_img_url, $content);
 
         $donations_page = [
             'post_title' => wp_strip_all_tags(DONATIONS_PAGE_TITLE),
