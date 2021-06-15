@@ -19,4 +19,6 @@
     <img src="%QR_CODE%" width="250" height="250" alt="Scan with your smartphone to make a donation"/>
 </div>
 
-<h1 style="clear:both;">Our Donors</h1>
+<div style="clear: both;">
+    <a href="donors/" class="link-button">Our Donors</a>
+</div>

@@ -18,7 +18,7 @@ add_action('init', [$controller, 'init']);
 add_action('wp_enqueue_scripts', 'fcab\view\donors\add_donor_stylesheet');
 add_filter('do_parse_request', [$controller, 'dispatch'], PHP_INT_MAX, 2);
 add_action(FCAB_DONOR_PAGES, function (Controller $controller) {
-    $controller->addPage(new DonorsPage('[\/]?donat[\w]+[\/]?$'))
+    $controller->addPage(new DonorsPage('[\/]?donors[\/]?$'))
         ->setTitle('Donations')
-        ->setTemplate('page-donate.php');
+        ->setTemplate('page-donors.php');
 });
