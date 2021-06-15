@@ -33,6 +33,8 @@ require_once 'fcab/view/donors/DonorsPageController.php';
 require_once 'fcab/model/FCABProject.php';
 require_once 'fcab/view/projects/ProjectsPage.php';
 require_once 'fcab/view/projects/ProjectsPageController.php';
+// Volunteers
+require_once 'fcab/model/FCABVolunteer.php';
 
 require_once 'init-controllers.php';
 require_once 'fcab/functions.php';
