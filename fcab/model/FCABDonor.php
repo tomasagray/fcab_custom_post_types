@@ -3,7 +3,6 @@
 namespace fcab\model;
 
 use const fcab\DOMAIN;
-use const fcab\FCAB_CPT_DONATION_PAGE_ID;
 
 const DONATIONS_PAGE_TITLE = 'Donate';
 
@@ -110,8 +109,7 @@ class FCABDonor
             'post_author' => 1,
             'post_type' => 'page',
         ];
-        $page_id = wp_insert_post($donations_page);
-        update_option(FCAB_CPT_DONATION_PAGE_ID, $page_id);
+        wp_insert_post($donations_page);
     }
 }
 
