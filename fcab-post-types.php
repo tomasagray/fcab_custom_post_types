@@ -37,7 +37,7 @@ require_once 'fcab/view/projects/ProjectsPageController.php';
 require_once 'fcab/model/FCABVolunteer.php';
 
 require_once 'init-controllers.php';
-require_once 'fcab/functions.php';
+require_once 'fcab/settings.php';
 
 
 register_activation_hook(__FILE__, [FCABDonor::class, 'create_donations_page']);
