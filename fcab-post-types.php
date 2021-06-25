@@ -16,7 +16,6 @@ use fcab\model\FCABDonor;
 const DOMAIN = 'fcab_cpt';
 // Options
 const FCAB_CPT_OPTIONS = 'fcab_cpt_options';
-const FCAB_CPT_DONATION_PAGE_ID = 'fcab_cpt_donation_page_id';
 
 require_once 'fcab/view/Page.php';
 require_once 'fcab/view/CustomPage.php';
