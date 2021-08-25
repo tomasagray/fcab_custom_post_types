@@ -28,6 +28,7 @@ require_once 'fcab/model/FCABDonor.php';
 require_once 'fcab/model/FCABDonorMetaBox.php';
 require_once 'fcab/view/donors/DonorsPage.php';
 require_once 'fcab/view/donors/DonorsPageController.php';
+require_once 'fcab/view/customfields/FCABDonationFields.php';
 // Projects
 require_once 'fcab/model/FCABProject.php';
 require_once 'fcab/view/projects/ProjectsPage.php';
@@ -36,6 +37,7 @@ require_once 'fcab/view/projects/ProjectsPageController.php';
 require_once 'fcab/model/FCABVolunteer.php';
 
 require_once 'init-controllers.php';
+require_once 'init-custom-fields.php';
 require_once 'fcab/settings.php';
 
 

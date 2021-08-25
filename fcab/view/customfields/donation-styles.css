@@ -1,0 +1,88 @@
+.donations-list {
+    background-color: whitesmoke;
+    border-collapse: collapse;
+    font-size: 12pt;
+}
+
+.donations-list tr {
+    border-bottom: 1px solid black;
+    padding: 2rem;
+}
+
+.donations-list tr:last-child {
+    border-bottom: 0;
+}
+
+.donations-list td {
+    padding: 1rem 2rem;
+}
+
+.donations-total {
+    background-color: white;
+}
+
+.remove-donation-button:hover {
+    cursor: pointer;
+}
+
+table.donations-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.donations-list > tbody td {
+    border-bottom: 1px solid black;
+}
+
+table.donations-list td {
+    padding: 1rem;
+    width: 50%;
+}
+
+table.donations-list > tbody tr:last-of-type td {
+    border: 0;
+}
+
+table.donations-list > thead {
+    background-color: paleturquoise;
+    font-weight: bold;
+}
+
+input[type=checkbox] + label {
+    float: right;
+}
+
+input[type=checkbox] + label::after {
+    content: "Un-delete";
+    font-size: 12pt;
+    color: red;
+    font-style: italic;
+}
+
+input[type=checkbox]:checked + label::after {
+    content: "Delete";
+}
+
+input[type=checkbox] {
+    visibility: hidden;
+}
+
+.removed-donation {
+    opacity: .5;
+    background-color: #cccccc;
+}
+
+.add-donation-wrapper {
+    margin-top: 2rem;
+}
+
+.add-donation-wrapper input[type=number] {
+    width: 150px;
+    display: block;
+    margin: .5rem 0;
+}
+
+.add-donation-wrapper label {
+    font-size: 12pt;
+    font-weight: bold;
+}

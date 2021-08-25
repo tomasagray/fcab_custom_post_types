@@ -48,5 +48,7 @@ class FCABDonorMetaBox
     }
 }
 
-add_action('add_meta_boxes', [FCABDonorMetaBox::class, 'add']);
-add_action('save_post', [FCABDonorMetaBox::class, 'save']);
+// -- DISABLED! --
+// todo - delete this class if not used
+//add_action('add_meta_boxes', [FCABDonorMetaBox::class, 'add']);
+//add_action('save_post', [FCABDonorMetaBox::class, 'save']);

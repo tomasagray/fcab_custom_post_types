@@ -2,6 +2,8 @@
 
 namespace fcab\model;
 
+use fcab\view\customfields\FCABDonationFields;
+use JsonException;
 use const fcab\DOMAIN;
 
 const DONATIONS_PAGE_TITLE = 'Donate';
@@ -43,7 +45,7 @@ class FCABDonor
                 'show_in_rest' => true,
                 'menu_icon' => plugin_dir_url(__FILE__) . '../../img/donors_admin_icon.png',
                 'can_export' => true,
-                'supports' => ['title', 'thumbnail', 'editor'],
+                'supports' => ['title', 'thumbnail', 'customfields'],
             ]
         );
     }
@@ -75,11 +77,21 @@ class FCABDonor
         return $columns;
     }
 
+    /**
+     * @throws JsonException
+     */
     public static function create_post_column($column, $post_id): void
     {
         if ($column === self::DONATION_FIELD_NAME) {
-            $donations = get_post_meta($post_id, self::DONATION_FIELD_NAME, true);
-            echo '<span>' . $donations . '</span>';
+            try {
+                $field_name = FCABDonationFields::PREFIX . FCABDonationFields::DONATION_FIELD;
+                $metadata = get_post_meta($post_id, $field_name, true);
+                $donations = json_decode($metadata, true, 512, JSON_THROW_ON_ERROR);
+                $total_donations = FCABDonationFields::getTotalDonations($donations);
+                echo '<span>' . $total_donations . '</span>';
+            } catch (JsonException $e) {
+                echo '<span>0</span>';
+            }
         }
     }
 
