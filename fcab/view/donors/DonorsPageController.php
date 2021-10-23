@@ -32,6 +32,6 @@ class DonorsPageController extends PageController
      */
     public function isPageType(): bool
     {
-        return isset($this->matched) && $this->matched !== null && $this->matched instanceof DonorsPage;
+        return isset($this->matched) && $this->matched instanceof DonorsPage;
     }
 }

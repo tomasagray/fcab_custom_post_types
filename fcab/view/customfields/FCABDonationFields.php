@@ -275,14 +275,5 @@ class FCABDonationFields
             return null;
         }
     }
-
-    private function writeLog(string $data): void
-    {
-        if (self::LOG !== null) {
-            file_put_contents(self::LOG, $data . "\n", FILE_APPEND);
-        } else {
-            echo $data;
-        }
-    }
 }
 

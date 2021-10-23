@@ -77,9 +77,6 @@ class FCABDonor
         return $columns;
     }
 
-    /**
-     * @throws JsonException
-     */
     public static function create_post_column($column, $post_id): void
     {
         if ($column === self::DONATION_FIELD_NAME) {

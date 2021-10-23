@@ -25,6 +25,6 @@ class ProjectsPageController extends PageController
 
     public function isPageType(): bool
     {
-        return isset($this->matched) && $this->matched !== null && $this->matched instanceof ProjectsPage;
+        return isset($this->matched) && $this->matched instanceof ProjectsPage;
     }
 }
