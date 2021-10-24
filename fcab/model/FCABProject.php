@@ -31,7 +31,7 @@ class FCABProject
                 ],
                 'public' => true,
                 'has_archive' => true,
-                'rewrite' => ['slug' => 'projects'],
+                'rewrite' => ['slug' => 'project'],
                 'show_ui' => true,
                 'show_in_nav_menus' => true,
                 'show_in_menu' => true,
