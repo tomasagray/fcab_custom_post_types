@@ -14,9 +14,7 @@ class FCABDonationFields
     public const DONATION_FIELD = 'donation_amount';
     public const DONATION_ID_PREFIX = 'donation-checkbox-';
 
-    private const LOG = "./donation.log";
-
-    private array $post_types = ['page', 'post', FCABDonor::POST_TYPE];
+    private array $post_types = [FCABDonor::POST_TYPE];
     private array $custom_fields = [
         self::DONATION_FIELD => [
             'name' => self::DONATION_FIELD,
@@ -69,7 +67,8 @@ class FCABDonationFields
             foreach ($this->custom_fields as $field):
                 if ($this->isInScope($field, $post) && current_user_can($field['capability'], $post->ID)): ?>
                     <div class="form-field form-required fcab-custom-field-wrapper">
-                        <?php switch ($field['name']):
+                        <?php
+                        switch ($field['name']):
                             case self::DONATION_FIELD:
                                 $donations = $this->getDonorDonations($post->ID);
                                 // print donations table
