@@ -8,7 +8,7 @@ use fcab\model\FCABDonor;
 /**
  * Plugin Name: FCAB Post Types
  * Description: Custom post types for the FCAB WordPress website
- * Version: 1.1
+ * Version: 0.2
  * Author: Tomás Gray
  **/
 
@@ -29,10 +29,12 @@ require_once 'fcab/model/FCABDonorMetaBox.php';
 require_once 'fcab/view/donors/DonorsPage.php';
 require_once 'fcab/view/donors/DonorsPageController.php';
 require_once 'fcab/view/customfields/FCABDonationFields.php';
-// Projects
+// Programs, Projects & Activities
 require_once 'fcab/model/FCABProject.php';
 require_once 'fcab/view/projects/ProjectsPage.php';
 require_once 'fcab/view/projects/ProjectsPageController.php';
+require_once 'fcab/model/FCABProgram.php';
+require_once 'fcab/model/FCABActivity.php';
 // Volunteers
 require_once 'fcab/model/FCABVolunteer.php';
 
