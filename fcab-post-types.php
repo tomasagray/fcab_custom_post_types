@@ -9,6 +9,9 @@ use fcab\model\FCABDonor;
  * Plugin Name: FCAB Post Types
  * Description: Custom post types for the FCAB WordPress website
  * Version: 0.2
+ * Requires at least: 5.0
+ * Tested up to: 5.8.1
+ * Requires PHP: 7.4
  * Author: Tomás Gray
  **/
 
@@ -43,4 +46,4 @@ require_once 'init-custom-fields.php';
 require_once 'fcab/settings.php';
 
 
-register_activation_hook(__FILE__, [FCABDonor::class, 'create_donations_page']);
+register_activation_hook( __FILE__, [ FCABDonor::class, 'create_donations_page' ] );
