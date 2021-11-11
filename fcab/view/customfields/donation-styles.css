@@ -63,7 +63,7 @@ input[type=checkbox]:checked + label::after {
     content: "Delete";
 }
 
-input[type=checkbox] {
+.donation-delete-button {
     visibility: hidden;
 }
 
