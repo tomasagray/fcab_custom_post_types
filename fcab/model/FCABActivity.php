@@ -34,7 +34,8 @@ class FCABActivity {
 				'show_in_rest'      => true,
 				'menu_icon'         => plugin_dir_url( __FILE__ ) . '../../img/activities_admin_icon.png',
 				'can_export'        => true,
-				'supports'          => [ 'title', 'thumbnail', 'editor' ],
+				'supports'          => [ 'title', 'thumbnail', 'editor', 'page-attributes' ],
+				'menu_position'     => 36,
 			]
 		);
 	}
@@ -48,5 +49,6 @@ add_filter( 'use_block_editor_for_post_type', function ( $use_block_editor, $pos
 	if ( in_array( $post_type, array( 'post', FCABActivity::POST_TYPE ), true ) ) {
 		return false;
 	}
+
 	return $use_block_editor;
 }, 10, 2 );

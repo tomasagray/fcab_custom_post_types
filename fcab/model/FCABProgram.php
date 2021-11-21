@@ -2,6 +2,8 @@
 
 namespace fcab\model;
 
+use WP_Post;
+use WP_Term;
 use const fcab\DOMAIN;
 
 
@@ -35,7 +37,8 @@ class FCABProgram {
 				'show_in_rest'      => true,
 				'menu_icon'         => plugin_dir_url( __FILE__ ) . '../../img/programs_admin_icon.png',
 				'can_export'        => true,
-				'supports'          => [ 'title', 'thumbnail', 'editor' ],
+				'supports'          => [ 'title', 'thumbnail', 'editor', 'page-attributes' ],
+				'menu_position'     => 35,
 			]
 		);
 	}
@@ -66,16 +69,23 @@ class FCABProgram {
 		}
 	}
 
-	public static function handle_status_change( $new_status, $old_status, $post ): void {
+	public static function handle_status_change( $new_status, $old_status, $program ): void {
 
-		if ( $new_status === $old_status ) {
-			return;
-		}
-		if ( $post !== null && $post->post_type === self::POST_TYPE ) {
-			if ( $new_status === 'publish' ) {
-				self::add_term_on_new_program( $post );
-			} elseif ( $new_status === 'trash' ) {
-				self::remove_term_on_delete_program( $post );
+		if ( $program !== null && $program->post_type === self::POST_TYPE ) {
+			switch ( $new_status ) {
+				case 'publish':
+					// if term already exists, update
+					$term = self::get_program_term( $program );
+					if ( $term !== null ) {
+						self::update_term( $term, $program );
+					} else {
+						self::add_term_on_new_program( $program );
+					}
+					break;
+
+				case 'trash':
+					self::remove_term_on_delete_program( $program );
+					break;
 			}
 		}
 	}
@@ -87,8 +97,21 @@ class FCABProgram {
 		wp_insert_term(
 			$post->post_title,
 			self::TAGS,
-			[ 'description' => $post->post_content ]
+			[
+				'description' => $post->post_content,
+				'slug'        => $post->ID
+			]
 		);
+	}
+
+	public static function update_term( ?WP_Term $term, WP_Post $post ): void {
+		if ( $term !== null ) {
+			wp_update_term( $term->term_id, self::TAGS, [
+				'description' => $post->post_content,
+				'slug'        => $post->ID,
+				'name'        => $post->post_title
+			] );
+		}
 	}
 
 	public static function remove_term_on_delete_program( $post ): void {
@@ -96,8 +119,23 @@ class FCABProgram {
 			return;
 		}
 		// get term id
-		$term = get_term_by( 'name', $post->post_title, self::TAGS );
-		wp_delete_term( $term->term_id, self::TAGS );
+		$term = self::get_program_term( $post );
+		if ( $term !== null ) {
+			wp_delete_term( $term->term_id, self::TAGS );
+		}
+	}
+
+	public static function get_program_term( $program ): ?WP_Term {
+		if ( $program === null ) {
+			return null;
+		}
+
+		$term = get_term_by( 'slug', $program->ID, self::TAGS );
+		if ( $term !== false ) {
+			return $term;
+		}
+
+		return null;
 	}
 }
 

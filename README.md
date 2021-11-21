@@ -6,7 +6,10 @@ an NGO which does humanitarian work in the village of Bagdumur.
 Currently, the plugin provides the following custom post types,
 as well as their front-end representations (meta-boxes, templates, etc.):
   - Donors
-  - more to come...
+  - Programs
+  - Projects
+  - Activities
+  - Volunteers
 
 ## Installation
 To install the plugin in WordPress:

@@ -45,5 +45,6 @@ require_once 'init-controllers.php';
 require_once 'init-custom-fields.php';
 require_once 'fcab/settings.php';
 
+require_once 'fcab/Log.php';
 
 register_activation_hook( __FILE__, [ FCABDonor::class, 'create_donations_page' ] );
