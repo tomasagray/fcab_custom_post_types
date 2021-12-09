@@ -92,6 +92,6 @@ function fcab_enqueue_admin_scripts($hook)
     }
 }
 
-add_action('admin_menu', 'fcab_custom_post_types_options');
-add_action('admin_init', 'register_fcab_cpt_settings');
+//add_action('admin_menu', 'fcab_custom_post_types_options');
+//add_action('admin_init', 'register_fcab_cpt_settings');
 add_action('admin_enqueue_scripts', 'fcab_enqueue_admin_scripts');
