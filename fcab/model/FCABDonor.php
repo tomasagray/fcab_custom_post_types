@@ -43,7 +43,13 @@ class FCABDonor {
 				'show_in_rest'      => true,
 				'menu_icon'         => plugin_dir_url( __FILE__ ) . '../../img/donors_admin_icon.png',
 				'can_export'        => true,
-				'supports'          => [ 'title', 'thumbnail', 'customfields', 'page-attributes' ],
+				'supports'          => [
+					'title',
+					'thumbnail',
+					'custom-fields',
+					'page-attributes',
+					'revisions',
+				],
 				'menu_position'     => 37,
 			]
 		);

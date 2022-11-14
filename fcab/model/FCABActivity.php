@@ -34,7 +34,14 @@ class FCABActivity {
 				'show_in_rest'      => true,
 				'menu_icon'         => plugin_dir_url( __FILE__ ) . '../../img/activities_admin_icon.png',
 				'can_export'        => true,
-				'supports'          => [ 'title', 'thumbnail', 'editor', 'page-attributes' ],
+				'supports'          => [
+					'title',
+					'thumbnail',
+					'editor',
+					'page-attributes',
+					'revisions',
+					'custom-fields',
+				],
 				'menu_position'     => 36,
 			]
 		);
