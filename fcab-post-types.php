@@ -8,7 +8,7 @@ use fcab\model\FCABDonor;
 /**
  * Plugin Name: FCAB Post Types
  * Description: Custom post types for the FCAB WordPress website
- * Version: 0.2.1
+ * Version: 0.2.2
  * Requires at least: 5.0
  * Tested up to: 5.8.1
  * Requires PHP: 7.4

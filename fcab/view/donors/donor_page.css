@@ -59,8 +59,8 @@ div.donor-image img {
     }
 
     div.donor-box {
-        /*display: flex;*/
-        /*flex-wrap: wrap;*/
+        display: flex;
+        flex-wrap: wrap;
     }
 
     div.donor-card {
